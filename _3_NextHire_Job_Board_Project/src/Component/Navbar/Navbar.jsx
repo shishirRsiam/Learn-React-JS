@@ -2,22 +2,25 @@ import React, { useState, useEffect } from 'react';
 import isAuthenticated from '../Authentication/IsAuthenticated';
 import ProfileDropdown from './ProfileDropdown';
 import NavigationLinks from './Navigation Links';
+import { Link } from "react-router-dom";
+
 
 const NavbarComponent = () => {
-    const [isVisible, setIsVisible] = useState(true); // Navbar visibility state
-    const [lastScrollY, setLastScrollY] = useState(0); // Last scroll position
+    const [isVisible, setIsVisible] = useState(true); 
+    const [lastScrollY, setLastScrollY] = useState(0);
 
-
-    const [isAuthenticated, setAuthenticated] = useState('');
+    const [Authenticated, setAuthenticated] = useState(false);
     useEffect(() => {
         const token = localStorage.getItem('authToken');
-        console.log('token ->', token);
+        console.log('authToken ->', token);
         if (token) {
             setAuthenticated(true);
         }
+        else {
+            setAuthenticated(false);
+        }
     }, []);
 
-    // Function to handle scroll
     const handleScroll = () => {
         const currentScrollY = window.scrollY;
 
@@ -48,12 +51,17 @@ const NavbarComponent = () => {
                 <><NavigationLinks /></>
 
                 <div>
-                    {isAuthenticated ? ( <> 
+                    {Authenticated ? ( <> 
                         <ProfileDropdown /> 
                     </>
-                        ) : ( <a href='/login/' className="hidden md:inline-block bg-yellow-300 text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-white hover:text-gray-500 transition">
-                            Login
-                        </a>
+                        ) : ( <div className="flex space-x-4">
+                            <Link to='/login/' className="hidden md:inline-block bg-yellow-300 text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-white hover:text-gray-500 transition">
+                                Login
+                            </Link>
+                            <Link to='/register/' className="hidden md:inline-block bg-yellow-300 text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-white hover:text-gray-500 transition">
+                                Register
+                            </Link>
+                        </div>
                     )}
                 </div>
 

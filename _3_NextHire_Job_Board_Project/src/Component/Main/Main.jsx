@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
     return (
@@ -12,9 +13,9 @@ const HomePage = () => {
                     <p className="text-lg md:text-xl mb-8">
                         Your ultimate platform to simplify hiring and job searching with cutting-edge tools.
                     </p>
-                    <a href="/login/" className="bg-yellow-400 text-gray-800 font-semibold py-3 px-6 rounded-lg hover:bg-yellow-500 transition"> 
+                    <Link to="/login/" className="bg-yellow-400 text-gray-800 font-semibold py-3 px-6 rounded-lg hover:bg-yellow-500 transition"> 
                         Login 
-                    </a>
+                    </Link>
                 </div>
             </section>
 
@@ -85,12 +86,9 @@ const HomePage = () => {
                     <p className="text-lg mb-8">
                         Join thousands of businesses and professionals using HireHub today.
                     </p>
-                    <a
-                        href="register/"
-                        className="bg-yellow-400 text-gray-800 font-semibold py-3 px-6 rounded-lg hover:bg-yellow-500 transition"
-                    >
+                    <Link to="register/" className="bg-yellow-400 text-gray-800 font-semibold py-3 px-6 rounded-lg hover:bg-yellow-500 transition">
                         Sign Up Now
-                    </a>
+                    </Link>
                 </div>
             </section>
         </div>

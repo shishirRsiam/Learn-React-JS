@@ -2,31 +2,34 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { TEInput, TERipple } from 'tw-elements-react';
 
+import API from './API';
+
 import ErrorSwalAlert from '../SwalAlert/ErrorSwalAlert';
 import SuccessSwalAlert from '../SwalAlert/SuccessSwalAlert';
 import ProccessingSwalAlert from '../SwalAlert/ProccessigSwalAlert';
 
 const LoginPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: '', password: '',
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData((prevData) => {
+      const updatedData = {
+        ...prevData,
+        [name]: value,
+      };
+      return updatedData;
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     ProccessingSwalAlert();
-
     try {
-      const response = await fetch('http://localhost:8000/api/login/', {
+      const response = await fetch(API.LoginAPI, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,8 +38,10 @@ const LoginPage = () => {
       });
 
       const result = await response.json();
-
+      console.log('&&&&&&&',  result);
       if (response.ok) {
+        localStorage.setItem('authToken', result.token);
+        localStorage.setItem('user', JSON.stringify(result.user));
         SuccessSwalAlert({ title: result.title, text: result.message , next_url: '/profile/' });
       } else {
         ErrorSwalAlert({ title: result.title, text: result.message });

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const ProfileDropdown = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -10,6 +11,7 @@ const ProfileDropdown = () => {
   const handleLogout = () => {
     console.log("User logged out");
     localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
     window.location.href = "/login";
   };
 
@@ -29,12 +31,12 @@ const ProfileDropdown = () => {
 
       {isDropdownOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
-          <a href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+          <Link to="/profile" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
             Profile
-          </a>
-          <a href="/settings" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+          </Link>
+          <Link to="/settings" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
             Settings
-          </a>
+          </Link>
           <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
             Logout
           </button>
