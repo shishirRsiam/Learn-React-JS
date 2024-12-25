@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import LoadingPage from "../Authentication/LoadingPage";
 import API from "../Authentication/API";
+import UserProfile from "./UserProfile";
 
 const ProfilePage = () => {
     const [user, setUser] = useState(null);
@@ -32,12 +33,7 @@ const ProfilePage = () => {
             {loading ? (
                 <LoadingPage />
             ) : (
-                <>
-                    <h1>Profile</h1>
-                    <p>Username: {user?.username}</p>
-                    <p>Email: {user?.email}</p>
-                    <p>Role: {user?.role}</p>
-                </>
+                <UserProfile user={user} />
             )}
         </>
     );
