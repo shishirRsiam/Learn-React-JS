@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Routes, Route, Link } from 'react-router-dom';
-
+import { motion } from "framer-motion";  // Import motion from framer-motion
 
 // Static Data (can be replaced by API data)
 const jobFeedData = [
@@ -49,7 +49,13 @@ const JobFeed = () => {
         {jobs.length > 0 ? (
           <div className="space-y-8">
             {jobs.map((job) => (
-              <div key={job.id} className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition duration-300 ease-in-out">
+              <motion.div
+                key={job.id}
+                className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+                initial={{ opacity: 0, y: 20 }} // Initial state (invisible and below)
+                animate={{ opacity: 1, y: 0 }}   // Animate to full opacity and normal position
+                transition={{ duration: 0.6 }}    // Duration of animation
+              >
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex flex-col">
                     <h2 className="text-xl font-semibold text-gray-800">{job.title}</h2>
@@ -67,7 +73,7 @@ const JobFeed = () => {
                   </Link>
                   <p className="text-xs text-gray-500">Deadline {job.posted}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         ) : (

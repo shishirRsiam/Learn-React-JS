@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion"; 
 
 const UserProfile = () => {
     const [jobsApplied, setJobsApplied] = useState([
@@ -22,7 +23,11 @@ const UserProfile = () => {
 
     return (
         <div className="flex justify-center items-start min-h-screen bg-gray-50 py-10">
-            <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-6xl border border-gray-200">
+            <motion.div
+                className="bg-white shadow-md rounded-lg p-8 w-full max-w-6xl border border-gray-200"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}>
                 {/* Profile Section */}
                 <div className="mb-10 text-center">
                     <h1 className="text-3xl font-bold text-gray-800">{user.username}</h1>
@@ -39,14 +44,22 @@ const UserProfile = () => {
                 </div>
 
                 {/* Jobs Applied Section */}
-                <div className="mb-10">
+                <motion.div
+                    className="mb-10"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.7, delay: 0.2 }} // Fade-in with delay
+                >
                     <h2 className="text-xl font-bold text-gray-800 mb-4">Jobs Applied</h2>
                     {jobsApplied.length > 0 ? (
                         <div className="space-y-4">
                             {jobsApplied.map((job) => (
-                                <div
+                                <motion.div
                                     key={job.id}
                                     className="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-sm"
+                                    initial={{ x: -100 }}
+                                    animate={{ x: 0 }}
+                                    transition={{ type: "spring", stiffness: 100 }}
                                 >
                                     <div>
                                         <h3 className="text-lg font-semibold">{job.title}</h3>
@@ -64,33 +77,49 @@ const UserProfile = () => {
                                     >
                                         {job.status}
                                     </p>
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
                     ) : (
                         <p className="text-gray-600">No jobs applied yet.</p>
                     )}
-                </div>
+                </motion.div>
 
                 {/* Notifications Section */}
-                <div className="mb-10">
+                <motion.div
+                    className="mb-10"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.4 }} // Fade-in with delay
+                >
                     <h2 className="text-xl font-bold text-gray-800 mb-4">Notifications</h2>
                     {notifications.length > 0 ? (
                         <ul className="space-y-4">
                             {notifications.map((notification) => (
-                                <li key={notification.id} className="bg-gray-100 p-4 rounded-lg shadow-sm">
+                                <motion.li
+                                    key={notification.id}
+                                    className="bg-gray-100 p-4 rounded-lg shadow-sm"
+                                    initial={{ y: 50 }}
+                                    animate={{ y: 0 }}
+                                    transition={{ type: "spring", stiffness: 75 }}
+                                >
                                     <p className="text-sm text-gray-700">{notification.message}</p>
                                     <p className="text-xs text-gray-500 mt-1">{notification.time}</p>
-                                </li>
+                                </motion.li>
                             ))}
                         </ul>
                     ) : (
                         <p className="text-gray-600">You have no new notifications.</p>
                     )}
-                </div>
+                </motion.div>
 
                 {/* Skills and Interests Section */}
-                <div className="mb-10">
+                <motion.div
+                    className="mb-10"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.9, delay: 0.6 }} // Fade-in with delay
+                >
                     <h2 className="text-xl font-bold text-gray-800 mb-4">Skills and Interests</h2>
                     <div className="flex flex-wrap gap-2">
                         {["React", "Django", "JavaScript", "Tailwind CSS", "Problem Solving"].map((skill) => (
@@ -102,7 +131,7 @@ const UserProfile = () => {
                             </span>
                         ))}
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Edit Profile Button */}
                 <div className="text-center">
@@ -110,7 +139,7 @@ const UserProfile = () => {
                         Edit Profile
                     </button>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };

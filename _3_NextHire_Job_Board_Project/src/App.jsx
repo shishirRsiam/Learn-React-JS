@@ -9,8 +9,10 @@ import NotFoundPage from './Component/Authentication/NotFoundPage';
 import ActivationPage from './Component/Authentication/AccountActivation';
 import ProfilePage from './Component/Profile/Profile';
 import LoadingPage from './Component/Authentication/LoadingPage';
-import JobFeed from './Component/Job Feed/JobFeed';
-import JobDetails from './Component/Job Feed/JobDetails';
+import JobFeed from './Component/Post/JobFeed';
+import JobDetails from './Component/Post/JobDetails';
+import AddPostForm from './Component/Post/AddPostForm';
+
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
         <Route path="/settings/" element={<LoadingPage />} />
         <Route path="/about/" element={<LoadingPage />} />
         <Route path="/profile/" element={<ProfilePage />} />
+        <Route path="/add/post/" element={<AddPostForm />} />
         <Route path="/accounts/activate/:id/:token" element={<ActivationPage />} />
       </Routes>
       <FooterComponent />
