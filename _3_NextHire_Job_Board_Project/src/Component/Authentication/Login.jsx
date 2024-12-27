@@ -29,6 +29,7 @@ const LoginPage = () => {
 
     ProccessingSwalAlert();
     try {
+      console.log(formData);
       const response = await fetch(API.LoginAPI, {
         method: 'POST',
         headers: {

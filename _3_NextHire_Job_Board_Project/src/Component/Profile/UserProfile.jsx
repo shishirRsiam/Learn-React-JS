@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion"; 
 
-const UserProfile = () => {
+const UserProfile = (props) => {
     const [jobsApplied, setJobsApplied] = useState([
         { id: 1, title: "Frontend Developer", company: "TechCorp", date: "2024-12-01", status: "In Progress" },
         { id: 2, title: "Backend Engineer", company: "Innovatech", date: "2024-11-15", status: "Rejected" },
@@ -13,13 +13,7 @@ const UserProfile = () => {
         { id: 2, message: "Backend Engineer application was rejected.", time: "1 day ago" },
     ]);
 
-    const user = {
-        username: "shishirRsiam",
-        email: "shishir@example.com",
-        role: "Developer",
-        bio: "Passionate developer with experience in web development and competitive programming. Always eager to learn and grow.",
-        joined: "2023-05-10",
-    };
+    const user = props.user;
 
     return (
         <div className="flex justify-center items-start min-h-screen bg-gray-50 py-10">
@@ -30,15 +24,16 @@ const UserProfile = () => {
                 transition={{ duration: 0.5 }}>
                 {/* Profile Section */}
                 <div className="mb-10 text-center">
-                    <h1 className="text-3xl font-bold text-gray-800">{user.username}</h1>
+                    <h1 className="text-3xl font-bold text-gray-800"> {user.user.first_name} {user.user.last_name} x {user.user.username}</h1>
                     <p className="text-sm text-gray-500">{user.role}</p>
                     <p className="text-gray-600 mt-2">{user.bio}</p>
                     <div className="mt-4 flex justify-center space-x-6">
                         <p>
-                            <span className="font-semibold text-gray-700">Email:</span> {user.email}
+                            <span className="font-semibold text-gray-700">Email:</span> {user.user.email}
                         </p>
                         <p>
-                            <span className="font-semibold text-gray-700">Joined:</span> {user.joined}
+                            <span className="font-semibold text-gray-700">Joined:</span> {user.created}
+                            <span className="font-semibold text-gray-700">Joined:</span> {new Date(user.created_at).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric'})} - {new Date(user.created_at).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit', hour12: true })}
                         </p>
                     </div>
                 </div>

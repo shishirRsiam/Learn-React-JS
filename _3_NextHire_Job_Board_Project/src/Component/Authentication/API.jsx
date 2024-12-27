@@ -1,11 +1,12 @@
-import ActivationPage from "./AccountActivation";
-
+const rootApi = 'http://localhost:8000/api/';
 const API = {
-    RegistrationsAPI: 'http://localhost:8000/api/register/',
-    LoginAPI: 'http://localhost:8000/api/login/',
-    UserAPI: 'http://localhost:8000/api/users/',
-    LogoutAPI: 'http://localhost:8000/api/logout/',
-    ActivationAPI: 'http://localhost:8000/api/accounts/activate/',
-  };
-  
-  export default API;
+    RegistrationsAPI: `${rootApi}register/`,
+    LoginAPI: `${rootApi}login/`,
+    UserAPI: `${rootApi}users/`,
+    LogoutAPI: `${rootApi}logout/`,
+    ActivationAPI: `${rootApi}accounts/activate/`,
+    AddPostAPI: `${rootApi}post/`,
+    ProfileAPI: `${rootApi}peofile/`,
+};
+
+export default API;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import API from "../Authentication/API";
 
 const JobPostForm = ({ existingJob, onSubmit }) => {
   const [formData, setFormData] = useState(
@@ -9,32 +10,60 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
       location: "Lalmonirhat, Bangladesh",
       deadline: "2024-12-31",
       salary: "50000",
-      type: "",
+      type: "Full Time",
     }
   );
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Pass the form data to the parent component or backend API
-    if (onSubmit) onSubmit(formData);
-    alert("Job saved successfully!");
-    console.log('-> Form submitted with data:', formData);
-    setFormData({
-      title: "",
-      company: "",
-      location: "",
-      posted: "",
-      deadline: "",
-      description: "",
-      salary: "",
-      type: "",
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+  
+    setFormData((prevData) => {
+      const updatedData = { ...prevData, [name]: value };
+      return updatedData;
     });
+  
+    console.log("Updated Form Data:", formData);
   };
+  
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    setFormData((prevData) => {
+      const updatedData = { ...prevData, [name]: value };
+      return updatedData;
+    });
+    console.log(formData);
+
+    const api = API.AddPostAPI;
+    console.log("API Endpoint:", api);
+    console.log(formData);
+
+    try {
+        const response = await fetch(api, {
+            method: "POST",
+            headers: {
+                "Authorization": `${localStorage.getItem("authToken")}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("API Response:", data);
+
+        if (onSubmit) onSubmit(formData);
+        alert("Job saved successfully!");
+    } catch (error) {
+        console.error("Error submitting form:", error);
+        alert("Failed to save the job. Please try again.");
+    }
+};
+
 
   return (
     <div className="bg-gray-50 py-12">
@@ -83,12 +112,8 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
           Company
         </label>
         <input
-          type="text"
-          id="company"
-          name="company"
-          value={formData.company}
-          onChange={handleChange}
-          required
+          type="text" id="company" name="company"
+          value={formData.company} onChange={handleChange} required
           className="w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
           placeholder="Enter company name"
         />
@@ -112,9 +137,6 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
       </div>
     </div>
 
-          
-
-          
 
         <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-8 justify-between">
           <div className="w-full mb-4">
