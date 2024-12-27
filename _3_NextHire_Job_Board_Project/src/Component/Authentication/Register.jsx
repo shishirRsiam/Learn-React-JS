@@ -8,7 +8,7 @@ const RegisterForm = () => {
   const [formData, setFormData] = useState({
     first_name: "Sample", last_name: "Siam", username: "shishir", email: "shishir.siam01@gmail.com", 
     password: "123456", confirm_password: "123456",
-    role: "Employer", company_name: "JS Company",  resume: null,
+    role: "Employer", company_name: "JS Company",
     terms_conditions: true,
   });
 
@@ -202,38 +202,7 @@ const RegisterForm = () => {
               <option value="Employer">Employer</option>
             </select>
           </div>
-          {formData.role === "Employer" && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Company Name</label>
-              <input
-                type="text"
-                name="company_name"
-                value={formData.company_name}
-                onChange={handleChange}
-                className="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50"
-              />
-              {formErrors.company_name && (
-                <p className="text-red-500 text-sm mt-1">{formErrors.company_name}</p>
-              )}
-            </div>
-          )}
         </div>
-
-        {/* Resume Upload */}
-        {formData.role === "Job Seeker" && (
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Resume</label>
-            <input
-              type="file"
-              name="resume"
-              onChange={handleFileChange}
-              className="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50"
-            />
-            {formErrors.resume && (
-              <p className="text-red-500 text-sm mt-1">{formErrors.resume}</p>
-            )}
-          </div>
-        )}
 
         {/* Terms and Conditions */}
         <div className="flex items-center">

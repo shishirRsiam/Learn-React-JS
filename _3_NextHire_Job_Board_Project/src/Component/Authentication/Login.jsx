@@ -10,7 +10,7 @@ import ProccessingSwalAlert from '../SwalAlert/ProccessigSwalAlert';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
-    username: '', password: '',
+    username: 'shishir', password: '123456',
   });
 
   const handleChange = (e) => {
