@@ -32,7 +32,6 @@ const UserProfile = (props) => {
                             <span className="font-semibold text-gray-700">Email:</span> {user.user.email}
                         </p>
                         <p>
-                            <span className="font-semibold text-gray-700">Joined:</span> {user.created}
                             <span className="font-semibold text-gray-700">Joined:</span> {new Date(user.created_at).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric'})} - {new Date(user.created_at).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit', hour12: true })}
                         </p>
                     </div>
