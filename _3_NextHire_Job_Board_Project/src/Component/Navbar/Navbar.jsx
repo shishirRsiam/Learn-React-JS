@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import ProfileDropdown from './ProfileDropdown';
 import NavigationLinks from './NavigationLinks';
+import useAuth from '../Authentication/useAuth';
+
 
 const NavbarComponent = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [Authenticated, setAuthenticated] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // State to handle mobile menu toggle
     const [user, setUser] = useState(null);
 
     const fetchUser = async () => {
@@ -36,12 +38,18 @@ const NavbarComponent = () => {
         };
     
         useEffect(() => {
+            console.log("Navbar Component Mounted");
             fetchUser();
+            // const { Authenticatedff, userff } = useAuth();
+            // setUser(userff);
+            // setAuthenticated(Authenticatedff);
         }, []);
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
+
+    
 
     return (
         <motion.nav
