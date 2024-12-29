@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import { Routes, Route } from 'react-router-dom';
 import NavbarComponent from './Component/Navbar/Navbar';
 import FooterComponent from './Component/Footer/Footer';
@@ -15,6 +17,38 @@ import AddPostForm from './Component/Post/AddPostForm';
 
 
 function App() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
+  const fetchUser = async () => {
+          try {
+              const response = await fetch("http://localhost:8000/api/auth/", {
+                  method: "POST",
+                  headers: {
+                      "Authorization": `${localStorage.getItem("authToken")}`, // Fixed header
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({}),
+              });
+          
+              if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+              }
+          
+              const data = await response.json();
+              console.log("Response data from app:", data);
+          
+              setAuthenticated(true);
+              setUser(data); // Assuming you want to set the received user data
+          } catch (error) {
+              console.log("Error fetching user:", error);
+          }
+      };
+  
+      useEffect(() => {
+          fetchUser();
+      }, []);
+
+
   return (
     <>
       <NavbarComponent />
@@ -27,7 +61,7 @@ function App() {
         <Route path="/job/:jobId/" element={<JobDetails />} />
         <Route path="/settings/" element={<LoadingPage />} />
         <Route path="/about/" element={<LoadingPage />} />
-        <Route path="/profile/" element={<ProfilePage />} />
+        <Route path="/profile/" element={<ProfilePage user={user} authenticated={authenticated} />} />
         <Route path="/add/post/" element={<AddPostForm />} />
         <Route path="/accounts/activate/:id/:token" element={<ActivationPage />} />
       </Routes>

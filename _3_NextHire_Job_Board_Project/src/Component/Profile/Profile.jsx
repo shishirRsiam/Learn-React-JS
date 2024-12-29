@@ -3,14 +3,14 @@ import LoadingPage from "../Authentication/LoadingPage";
 import API from "../Authentication/API";
 import UserProfile from "./UserProfile";
 
-const ProfilePage = () => {
+const ProfilePage = (props) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [fetchError, setFetchError] = useState(null);
 
     const fetchUser = async () => {
         try {
-            const response = await fetch("http://localhost:8000/api/profile/", {
+            const response = await fetch("http://localhost:8000/api/auth/", {
                 method: "POST",
                 headers: {
                     "Authorization": `${localStorage.getItem("authToken")}`, // Fixed header
@@ -34,7 +34,13 @@ const ProfilePage = () => {
     };
 
     useEffect(() => {
-
+        console.log("Profile Page Mounted");
+        console.log("Token:", localStorage.getItem("authToken"));
+        console.log('Props:', props);
+        // setUser(props.user);
+        // setLoading(false);
+        // console.log('User:', user);
+        
         fetchUser();
     }, []);
 

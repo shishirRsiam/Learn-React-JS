@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
-const ProfileDropdown = () => {
+const ProfileDropdown = (props) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -33,7 +33,7 @@ const ProfileDropdown = () => {
     <div ref={dropdownRef} className="relative inline-block text-left">
       <button onClick={toggleDropdown}
         className="flex items-center space-x-2 bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 transition">
-        <span className="font-medium">John Doe</span>
+        <span className="font-medium">{props.user.user.first_name} {props.user.user.last_name}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg" className="h-5 w-5"
           viewBox="0 0 20 20" fill="currentColor">
