@@ -24,7 +24,6 @@ const ProfilePage = (props) => {
             }
         
             const data = await response.json();
-            console.log("Response data:", data);
         
             setUser(data); // Assuming you want to set the received user data
             setLoading(false);
@@ -34,7 +33,6 @@ const ProfilePage = (props) => {
     };
 
     useEffect(() => {
-        console.log("Profile Page Mounted");
         console.log("Token:", localStorage.getItem("authToken"));
         console.log('Props:', props);
         // setUser(props.user);

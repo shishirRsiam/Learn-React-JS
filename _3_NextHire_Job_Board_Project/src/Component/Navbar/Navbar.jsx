@@ -29,7 +29,6 @@ const NavbarComponent = () => {
                 }
             
                 const data = await response.json();  
-                console.log("Response data:", data);          
                 setUser(data);
                 setAuthenticated(true);
             } catch (error) {
@@ -38,7 +37,6 @@ const NavbarComponent = () => {
         };
     
         useEffect(() => {
-            console.log("Navbar Component Mounted");
             fetchUser();
             // const { Authenticatedff, userff } = useAuth();
             // setUser(userff);

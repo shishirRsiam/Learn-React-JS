@@ -8,41 +8,58 @@ import { motion } from "framer-motion";  // Importing motion
 const JobDetails = () => {
   const { jobId } = useParams();
   const [job, setJob] = useState(null);
+  const [fetchedData, setFetchedData] = useState(null);
+  const [buttonName, setButtonName] = useState('Apply');
   const [loading, setLoading] = useState(true);
+  const [canApply, setCanApply] = useState(true);
   const [error, setError] = useState(false);
 
-  const fetchJob = async () => {
-    try {
-      const response = await fetch(`${API.AddPostAPI}${jobId - 1552004}/`);
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error('Something went wrong!');
-      }
-      setLoading(false);
-      setJob(data);
-    } catch (error) {
-      setError(true);
-      console.error("Error fetching job:", error);
-    }
-  };
-  const fetchApply = async () => {
-    try {
-      const response = await fetch(`${API.AddPostAPI}${jobId - 1552004}/apply/`);
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error('Something went wrong!');
-      }
-      setLoading(false);
-      setJob(data);
-    } catch (error) {
-      setError(true);
-      console.error("Error fetching job:", error);
-    }
-  }
   useEffect(() => {
+    const fetchApply = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/post/apply/${jobId - 1552004}/`, {
+          method: "POST",
+          headers: {
+            Authorization: `${localStorage.getItem("authToken")}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({}),
+        });
 
+
+        if (!response.ok) {
+          throw new Error(await response.text()); // Log error response
+        }
+
+        const data = await response.json();
+        console.log('Fetch Successful:', data);
+
+        setButtonName(data.button_name);
+        setCanApply(data.can_apply);
+      } catch (error) {
+        console.error('Fetch Apply Error:', error);
+        setError(true);
+      }
+    };
+    const fetchJob = async () => {
+      try {
+        const response = await fetch(`${API.AddPostAPI}${jobId - 1552004}/`);
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error('Something went wrong!');
+        }
+        setLoading(false);
+        setJob(data.job_post);
+        setFetchedData(data);
+      } catch (error) {
+        setError(true);
+        console.error("Error fetching job:", error);
+      }
+    };
     fetchJob();
+    fetchApply();
   }, [jobId]);
+
 
   if (error) {
     return <NotFoundPage />;
@@ -64,17 +81,16 @@ const JobDetails = () => {
           className="bg-gradient-to-r from-pink-500 to-pink-600 p-6 text-white"
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7 }}
-        >
+          transition={{ duration: 0.7 }}>
           <h1 className="text-3xl font-extrabold">{job.title}</h1>
           <p className="text-sm mt-2">{job.company} • {job.location}</p>
-          <p className="text-xs mt-1">Posted {job.posted} • Deadline: {job.deadline}</p>
+          <p className="text-xs mt-1">Posted Date: {new Date(job.created_at).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })} - {new Date(job.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })} • Deadline: {job.deadline}</p>
         </motion.div>
 
         <div className="p-8">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-gray-800">{job.title}</h2>
-            <span className="text-lg font-semibold text-pink-500">{job.salary}</span>
+            <span className="text-lg font-bold text-black-500">Salary: <span className="text-lg font-semibold text-pink-500">{job.salary}</span></span>
           </div>
 
           <motion.div
@@ -87,14 +103,27 @@ const JobDetails = () => {
           </motion.div>
 
           <motion.div
-            className="flex flex-col sm:flex-row gap-4"
-            initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }}>
-            <button
-              className="w-full sm:w-auto bg-pink-500 text-white py-3 px-6 rounded-lg shadow-md hover:bg-pink-600 transition duration-200"
-              onClick={() => alert("Apply functionality coming soon!")}>
-              Apply Now
+            className="flex justify-between sm:flex-row items-center gap-4 bg-white rounded-lg "
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8 }}>
+            <button className={`w-full sm:w-auto py-3 px-6 rounded-full shadow-lg transform transition-transform duration-300 ${canApply
+                  ? "bg-gradient-to-r from-pink-500 to-red-500 text-white hover:scale-105 hover:shadow-xl"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed" } flex items-center justify-center gap-2`}
+              onClick={() => canApply && alert("Apply functionality coming soon!")}
+              disabled={!canApply}>
+              {buttonName}
             </button>
+            <p
+              className="text-sm sm:mt-1 text-gray-600 font-medium transition-opacity duration-500"
+              style={{ opacity: fetchedData.total_applicants ? 1 : 0.7 }}>
+              <span className="text-lg font-bold text-pink-500">
+                {fetchedData.total_applicants}
+              </span>{" "}
+              Applicants
+            </p>
           </motion.div>
+
         </div>
       </div>
     </motion.div>

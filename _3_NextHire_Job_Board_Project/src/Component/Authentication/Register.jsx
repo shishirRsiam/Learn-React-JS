@@ -72,16 +72,12 @@ const RegisterForm = () => {
         const data = await response.json();
 
         if (response.ok) {
-          console.log("Successfully submitted the form:", data);
           SuccessSwalAlert({ title: data.title, text: data.message , next_url: '/login/' });
-          
         }
         else {
-          console.log("Server Error Details:", data);
           ErrorSwalAlert({ title: data.title, text: data.message });
         }
     } catch (error) {
-        console.error("Error fetching API:", error);
         // ErrorSwalAlert({ title: 'Error', text: 'Failed to submit the form' });
     }
 };
@@ -92,7 +88,6 @@ const RegisterForm = () => {
       ProccessingSwalAlert();
       FetchAPI();
     }
-    console.log(formData);
   };
 
   return (

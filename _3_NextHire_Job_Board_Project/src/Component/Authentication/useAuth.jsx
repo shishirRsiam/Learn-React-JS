@@ -21,21 +21,16 @@ function useAuth() {
                 }
 
                 const data = await response.json();
-                console.log("Response data from app:", data);
 
                 setAuthenticated(true);
                 setUser(data); // Set the user data received from the API
             } catch (error) {
-                console.log("Error fetching user:", error);
                 setAuthenticated(false);
             }
         };
 
         fetchUser();
     }, []);
-
-    console.log("User ->:", user);
-    console.log("Authenticated ->:", authenticated);
 
     return { authenticated, user };
 }

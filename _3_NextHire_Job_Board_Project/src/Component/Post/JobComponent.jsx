@@ -5,7 +5,6 @@ import { Routes, Route, Link } from 'react-router-dom';
 
 const JobComponent = (props) => {
     const job = props.job;
-    console.log(job);
     return (
         <div>
             <motion.div
@@ -18,7 +17,7 @@ const JobComponent = (props) => {
                   <div className="flex flex-col">
                     <h2 className="text-xl font-semibold text-gray-800">{job.title} : {job.id}</h2>
                     <p className="text-sm text-gray-500">{job.company}  • {job.location}</p>
-                    <p className="text-sm text-gray-500">Salary: ${job.salary}</p>
+                    <p className="text-sm text-gray-500">Salary: {job.salary}</p>
                   </div>
                   <p className="text-xs text-gray-400">
                     <strong className="font-semibold text-gray-700">Posted Date: </strong> 

@@ -23,7 +23,6 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
       return updatedData;
     });
   
-    console.log("Updated Form Data:", formData);
   };
   
 
@@ -34,11 +33,8 @@ const JobPostForm = ({ existingJob, onSubmit }) => {
       const updatedData = { ...prevData, [name]: value };
       return updatedData;
     });
-    console.log(formData);
 
     const api = API.AddPostAPI;
-    console.log("API Endpoint:", api);
-    console.log(formData);
 
     try {
         const response = await fetch(api, {

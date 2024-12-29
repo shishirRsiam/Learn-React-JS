@@ -12,12 +12,10 @@ const JobFeed = () => {
   
 
   const fetchPosts = async () => {
-    console.log("Job Feed Component Mounted");
     try {
       const response = await fetch(`${API.AddPostAPI}`);
       const data = await response.json();
       setJobs(data.job_posts);
-      console.log(data);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -30,7 +28,6 @@ const JobFeed = () => {
     fetchPosts();
   
     return () => {
-      console.log("Job Feed Component Unmounted");
     };
   }, []);
   

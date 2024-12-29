@@ -29,7 +29,6 @@ const LoginPage = () => {
 
     ProccessingSwalAlert();
     try {
-      console.log(formData);
       const response = await fetch(API.LoginAPI, {
         method: 'POST',
         headers: {
@@ -39,7 +38,6 @@ const LoginPage = () => {
       });
 
       const result = await response.json();
-      console.log('&&&&&&&',  result);
       if (response.ok) {
         localStorage.setItem('authToken', result.token);
         localStorage.setItem('user', JSON.stringify(result.user));
