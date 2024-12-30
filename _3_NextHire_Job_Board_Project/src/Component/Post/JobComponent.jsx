@@ -26,7 +26,7 @@ const JobComponent = (props) => {
 
                 </div>
 
-                <p className="text-gray-600 mb-4">{job.description}</p>
+                <p className="text-gray-600 mb-4">{job.description.slice(0, 250)}.....</p>
 
                 <div className="flex justify-between items-center">
                   <Link to={`/job/${job.id + 1552004}`} className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-200">
