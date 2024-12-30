@@ -104,7 +104,15 @@ const UserProfile = (props) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.7, delay: 0.2 }}>
-                    <h2 className="text-xl font-bold text-gray-800 mb-4">Jobs Applied</h2>
+                    <motion.div
+                        className="mb-10 flex justify-between items-center"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.7, delay: 0.2 }}>
+                        <h2 className="text-xl font-bold text-gray-800 mb-4">Jobs Applied</h2>
+                        <h2 className="text-xl font-bold text-gray-800 mb-4">Total Applied: {jobsApplied.length}</h2>
+                    </motion.div>
+
                     {jobsApplied.length > 0 ? (
                         <div className="space-y-4">
                             {jobsApplied.map((job) => (
