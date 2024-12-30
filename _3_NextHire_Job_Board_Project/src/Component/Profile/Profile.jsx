@@ -7,6 +7,7 @@ const ProfilePage = (props) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [fetchError, setFetchError] = useState(null);
+    const [jobsApplied, setJobsApplied] = useState([]);
 
     const fetchUser = async () => {
         try {
@@ -25,7 +26,8 @@ const ProfilePage = (props) => {
         
             const data = await response.json();
         
-            setUser(data); // Assuming you want to set the received user data
+            setUser(data.userData);
+            // setJobsApplied(data.appliedData);
             setLoading(false);
         } catch (error) {
             console.log("Error fetching user:", error);
@@ -47,7 +49,7 @@ const ProfilePage = (props) => {
             {loading ? (
                 <LoadingPage />
             ) : (
-                <UserProfile user={user} />
+                <UserProfile user={user} jobsApplied={jobsApplied} />
             )}
         </>
     );

@@ -29,7 +29,7 @@ const NavbarComponent = () => {
                 }
             
                 const data = await response.json();  
-                setUser(data);
+                setUser(data.userData);
                 setAuthenticated(true);
             } catch (error) {
                 console.log("Error fetching user:", error);

@@ -3,9 +3,11 @@ import { useParams } from "react-router-dom";
 import LoadingPage from "../Authentication/LoadingPage";
 import NotFoundPage from "../Authentication/NotFoundPage";
 import API from "../Authentication/API";
-import { motion } from "framer-motion";  // Importing motion
+import { motion } from "framer-motion";
+import ApplicationForm from "./ApplicationForm";
 
 const JobDetails = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { jobId } = useParams();
   const [job, setJob] = useState(null);
   const [fetchedData, setFetchedData] = useState(null);
@@ -13,6 +15,14 @@ const JobDetails = () => {
   const [loading, setLoading] = useState(true);
   const [canApply, setCanApply] = useState(true);
   const [error, setError] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const fetchApply = async () => {
@@ -23,7 +33,10 @@ const JobDetails = () => {
             Authorization: `${localStorage.getItem("authToken")}`,
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({}),
+          body: JSON.stringify({
+            job_id: jobId - 1552004,
+            is_apply: false
+          }),
         });
 
 
@@ -72,10 +85,9 @@ const JobDetails = () => {
   return (
     <motion.div
       className="bg-gradient-to-b from-gray-50 to-gray-200 py-12"
-      initial={{ opacity: 0 }} // Initial state for the animation
-      animate={{ opacity: 1 }} // End state
-      transition={{ duration: 0.5 }} // Transition duration
-    >
+      initial={{ opacity: 0 }} 
+      animate={{ opacity: 1 }} 
+      transition={{ duration: 0.5 }}>
       <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-lg overflow-hidden">
         <motion.div
           className="bg-gradient-to-r from-pink-500 to-pink-600 p-6 text-white"
@@ -107,13 +119,14 @@ const JobDetails = () => {
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}>
-            <button className={`w-full sm:w-auto py-3 px-6 rounded-full shadow-lg transform transition-transform duration-300 ${canApply
+            <button className={`w-3xl sm:w-auto py-3 px-6 rounded-full shadow-lg transform transition-transform duration-300 ${canApply
                   ? "bg-gradient-to-r from-pink-500 to-red-500 text-white hover:scale-105 hover:shadow-xl"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed" } flex items-center justify-center gap-2`}
-              onClick={() => canApply && alert("Apply functionality coming soon!")}
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"} flex items-center justify-center gap-2`}
+              onClick={() => canApply && handleOpenModal()}
               disabled={!canApply}>
               {buttonName}
             </button>
+            {isModalOpen && <ApplicationForm  handleCloseModal={handleCloseModal} isModalOpen={isModalOpen} jobId={jobId} />}
             <p
               className="text-sm sm:mt-1 text-gray-600 font-medium transition-opacity duration-500"
               style={{ opacity: fetchedData.total_applicants ? 1 : 0.7 }}>

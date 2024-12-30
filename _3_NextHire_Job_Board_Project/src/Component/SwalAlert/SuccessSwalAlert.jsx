@@ -4,8 +4,8 @@ const SuccessSwalAlert = (props) => {
     Swal.fire({
         title: props.title,
         text: props.text,
-        icon: 'success',
-        confirmButtonText: 'Okay',
+        icon: props.icon || 'success',
+        confirmButtonText: props.confirmButtonText || 'Okay',
         background: '#e8f5e9',
         confirmButtonColor: '#2e7d32',
         iconColor: '#2e7d32',
