@@ -25,6 +25,7 @@ const JobDetails = () => {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchApply = async () => {
       try {
         const response = await fetch(`http://localhost:8000/api/post/apply/${jobId - 1552004}/`, {

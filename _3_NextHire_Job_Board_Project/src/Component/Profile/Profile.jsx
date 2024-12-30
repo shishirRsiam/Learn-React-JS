@@ -27,7 +27,7 @@ const ProfilePage = (props) => {
             const data = await response.json();
         
             setUser(data.userData);
-            // setJobsApplied(data.appliedData);
+            setJobsApplied(data.appliedData);
             setLoading(false);
         } catch (error) {
             console.log("Error fetching user:", error);
