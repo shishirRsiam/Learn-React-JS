@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Routes, Route, Link } from 'react-router-dom';
+import JobAppliedComponent from "./JobAppliedComponent";
+import EditProfileModal from "./EditProfileModal";
 
 
 const UserProfile = (props) => {
+    const [isModalOpen, setModalOpen] = useState(false);
     const defaultProfilePic = "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg"
+    
+    const user = props.user;
     const jobsApplied = props.jobsApplied;
 
-    // jobsApplied = props.jobsApplied;
-    console.log(jobsApplied);
-    console.log('props ->', props);
+    const toggleModal = () => {
+        setModalOpen((prev) => !prev);
+    }
 
-    const [notifications, setNotifications] = useState([
-        { id: 1, message: "Your application for Frontend Developer is under review.", time: "2 hours ago" },
-        { id: 2, message: "Backend Engineer application was rejected.", time: "1 day ago" },
-    ]);
-
-    const user = props.user;
     useEffect(() => {
-        console.log('user ->', user);
         // setJobsApplied(props.jobsApplied);
-        console.log('jobsApplied ->', jobsApplied);
     }, [])
 
     return (
@@ -37,10 +34,8 @@ const UserProfile = (props) => {
                     <div className="flex-shrink-0">
                         <div className="relative inline-block">
                             <img
-                                src={user.profilePic || defaultProfilePic}
-                                alt="Profile"
-                                className="w-40 h-40 rounded-full shadow-lg border-4 border-blue-500 "
-                            />
+                                src={user.profilePic || defaultProfilePic} alt="Profile"
+                                className="w-40 h-40 rounded-full shadow-lg border-4 border-blue-500 "/>
                             <span className="absolute bottom-0 right-0 w-6 h-6 bg-green-500 border-2 border-white rounded-full"></span>
                         </div>
                     </div>
@@ -81,8 +76,7 @@ const UserProfile = (props) => {
                                     "Tailwind CSS", 
                                     "Problem Solving"
                                 ].map((skill) => (
-                                    <span
-                                        key={skill}
+                                    <span key={skill}
                                         className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm shadow-sm hover:shadow-md transition-shadow">
                                         {skill}
                                     </span>
@@ -90,55 +84,19 @@ const UserProfile = (props) => {
                             </div>
                         </motion.div>
                         <div className="mt-6">
-                            <button className="px-6 py-2 bg-blue-500 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-600 transition-all">
+                            <button onClick={toggleModal} className="px-6 py-2 bg-blue-500 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-blue-600 transition-all">
                                 Edit Profile
                             </button>
                         </div>
                     </motion.div>
                 </div>
 
-
                 {/* Jobs Applied Section */}
-                <motion.div
-                    className="mb-10"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.7, delay: 0.2 }}>
-                    <motion.div
-                        className="mb-4 flex justify-between items-center"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.7, delay: 0.2 }}>
-                        <h2 className="text-xl font-bold text-gray-800">Jobs Applied</h2>
-                        <h2 className="text-xl font-bold text-gray-800">Total Applied: {jobsApplied.length}</h2>
-                    </motion.div>
+                <JobAppliedComponent jobsApplied={jobsApplied} />
+                
+                {/* Edit Profile Modal */}
+                <EditProfileModal isOpen={isModalOpen} toggleModal={toggleModal}/>
 
-                    {jobsApplied.length > 0 ? (
-                        <div className="space-y-4">
-                            {jobsApplied.map((job) => (
-                                <motion.div
-                                    key={job.job.id}
-                                    className="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow"
-                                    initial={{ x: -100 }}
-                                    animate={{ x: 0 }}
-                                    transition={{ type: "spring", stiffness: 100 }}>
-                                    <div>
-                                        <h3 className="text-lg font-semibold text-gray-800">{job.job.title}</h3>
-                                        <p className="text-sm text-gray-600">Salary: {job.job.salary} </p> 
-                                        <p className="text-sm text-gray-600">Company: {job.job.company} </p> 
-                                        <p className="text-sm text-gray-600"> Location: {job.job.location} </p> 
-                                        <p className="text-xs text-gray-500 mt-1">Applied on: {new Date(job.created_at).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })} - {new Date(job.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}</p>
-                                    </div>
-                                    <Link to={`/job/${job.job.id + 1552004}/`} className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-200">
-                                        View Details
-                                    </Link>
-                                </motion.div>
-                            ))}
-                        </div>
-                    ) : (
-                        <p className="text-gray-600">No jobs applied yet.</p>
-                    )}
-                </motion.div>
             </motion.div>
         </div>
     );
