@@ -1,4 +1,4 @@
-import Swal from 'sweetalert2'; // Directly import Swal
+import Swal from 'sweetalert2';
 
 const SuccessSwalAlert = (props) => {
     Swal.fire({
@@ -11,7 +11,6 @@ const SuccessSwalAlert = (props) => {
         iconColor: '#2e7d32',
     }).then((result) => {
         if (result.isConfirmed) {
-            // After the alert is closed, navigate to the login page
             window.location.href = props.next_url;
         }
     });
