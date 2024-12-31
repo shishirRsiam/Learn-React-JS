@@ -17,6 +17,7 @@ const UserProfile = (props) => {
     }
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         // setJobsApplied(props.jobsApplied);
     }, [])
 
@@ -61,6 +62,12 @@ const UserProfile = (props) => {
                             <span className="font-semibold text-gray-700">Joined:</span>
                             <span className="text-gray-600">{new Date(user.created_at).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric'})} - {new Date(user.created_at).toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit', hour12: true })}</span>
                         </p>
+                        {user.resume && (
+                            <p className="flex items-center gap-2 mt-2">
+                                <span className="font-semibold text-gray-700">Click to:</span>
+                                <a target="_blank" href={user.resume} className="text-blue-600 underline">View Resume</a>
+                            </p>
+                        )}
                         {/* Skills and Interests Section */}
                         <motion.div
                             className="mt-6"
@@ -95,7 +102,7 @@ const UserProfile = (props) => {
                 <JobAppliedComponent jobsApplied={jobsApplied} />
                 
                 {/* Edit Profile Modal */}
-                <EditProfileModal isOpen={isModalOpen} toggleModal={toggleModal}/>
+                <EditProfileModal isOpen={isModalOpen} toggleModal={toggleModal} user={user}/>
 
             </motion.div>
         </div>

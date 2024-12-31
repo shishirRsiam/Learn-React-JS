@@ -1,40 +1,48 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import ResumeAndBioComponent from "./ResumeAndBioComponent";
 
-const EditProfileModal = ({ isOpen, toggleModal }) => {
+
+const EditProfileModal = ({ isOpen, toggleModal, user }) => {
   const [skills, setSkills] = useState([
-    "React",
-    "Django",
-    "JavaScript",
-    "Tailwind CSS",
-    "Problem Solving",
-    "HTML",
-    "CSS",
-    "Bootstrap",
-    "Python",
-    "Git",
-    "Node.js",
-    "TypeScript",
-    "Redux",
-    "Next.js",
-    "REST APIs",
-    "GraphQL",
-    "MySQL",
-    "PostgreSQL",
-    "MongoDB",
-    "OOP Concepts",
-    "C++",
-    "Unit Testing",
-    "Webpack",
-    "AWS",
-    "Docker",
-    "Kubernetes",
-  ]);
+    {
+        "id": 1,
+        "name": "React",
+        "created_at": "2024-12-31T00:30:57.482956+06:00",
+        "updated_at": "2024-12-31T00:30:57.482977+06:00"
+    },
+    {
+        "id": 2,
+        "name": "C++",
+        "created_at": "2024-12-31T22:10:02.874780+06:00",
+        "updated_at": "2024-12-31T22:10:02.874794+06:00"
+    },
+    {
+        "id": 3,
+        "name": "Python",
+        "created_at": "2024-12-31T22:10:07.861559+06:00",
+        "updated_at": "2024-12-31T22:10:07.861577+06:00"
+    },
+    {
+        "id": 4,
+        "name": "DSA",
+        "created_at": "2024-12-31T22:10:11.926220+06:00",
+        "updated_at": "2024-12-31T22:10:11.926242+06:00"
+    },
+    {
+        "id": 5,
+        "name": "Problem Solver",
+        "created_at": "2024-12-31T22:10:20.347529+06:00",
+        "updated_at": "2024-12-31T22:10:20.347584+06:00"
+    }
+]);
+
+  console.log("user Data: ->", user);
 
   const [newSkill, setNewSkill] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [resume, setResume] = useState("");
-  const [bio, setBio] = useState("");
+  const [resume, setResume] = useState(user.resume);
+  const [bio, setBio] = useState(user.bio);
 
   const addSkill = (skill) => {
     if (skill.trim() && !skills.includes(skill)) {
@@ -43,6 +51,29 @@ const EditProfileModal = ({ isOpen, toggleModal }) => {
       setSuggestions([]);
     }
   };
+  const fetchUpdatedUserData = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/update/profile/", {
+        method: "POST",
+        headers: {
+          Authorization: `${localStorage.getItem("authToken")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          skills: skills,
+          resume: resume,
+          bio: bio,
+        }),
+      });
+      if (!response.ok) {
+        console.error("Failed to update user data");
+      } 
+      console.log("User data updated successfully");
+    } catch (error) {
+      console.error("Error updating user data:", error);
+    }
+  };
+
 
   const removeSkill = (skillToRemove) => {
     setSkills(skills.filter((skill) => skill !== skillToRemove));
@@ -71,8 +102,9 @@ const EditProfileModal = ({ isOpen, toggleModal }) => {
   };
 
   const handleSave = () => {
-    alert("Profile saved successfully!");
     console.log({ skills, resume, bio });
+    fetchUpdatedUserData();
+    alert("Profile saved successfully!");
   };
 
   const selectSuggestion = (suggestedSkill) => {
@@ -100,38 +132,12 @@ const EditProfileModal = ({ isOpen, toggleModal }) => {
 
         {/* Skills Section */}
         <div className="mb-4">
-          <div className="mb-4">
-            <label htmlFor="resume" className="block text-lg font-bold mb-2">
-              Resume
-            </label>
-            <textarea
-              id="resume"
-              name="resume"
-              rows="2"
-              value={resume}
-              onChange={(e) => setResume(e.target.value)}
-              placeholder="Upload your resume Google Drive or other platform and enter your resume link here..."
-              className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="bio" className="block text-lg font-bold mb-2">
-              Bio
-            </label>
-            <textarea
-              id="bio"
-              name="bio"
-              rows="3"
-              value={bio}
-              onChange={(e) => setBio(e.target.value)}
-              placeholder="Enter your bio here..."
-              className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
-          </div>
+          
+        <ResumeAndBioComponent resume={resume} setResume={setResume} bio={bio} setBio={setBio} />
 
           <h3 className="text-lg font-bold mb-2">Skills</h3>
           <div className="relative mb-4">
-            <input
-              type="text"
+            <input type="text"
               value={newSkill}
               onChange={handleSkillChange}
               onKeyDown={handleKeyDown}
@@ -141,8 +147,7 @@ const EditProfileModal = ({ isOpen, toggleModal }) => {
             {suggestions.length > 0 || (newSkill.trim() && !skills.includes(newSkill)) ? (
               <ul className="absolute bg-white border rounded-lg shadow-lg mt-1 w-full z-10">
                 {newSkill.trim() && !skills.includes(newSkill) && (
-                  <li
-                    onClick={() => addSkill(newSkill)}
+                  <li onClick={() => addSkill(newSkill)}
                     className="p-2 cursor-pointer bg-green-200 hover:bg-green-300 text-green-800 font-bold">
                     Create and Add: "{newSkill}"
                   </li>
@@ -161,9 +166,8 @@ const EditProfileModal = ({ isOpen, toggleModal }) => {
           <div className="flex flex-wrap gap-2 mb-4">
             {skills.map((skill, index) => (
               <div key={index} className="flex items-center bg-gray-200 p-2 rounded-lg">
-                <input type="text" value={skill} readOnly
-                  className="border-none bg-transparent focus:outline-none"
-                />
+                <input type="text" value={skill.name} readOnly
+                  className="border-none bg-transparent focus:outline-none"/>
                 <button
                   onClick={() => removeSkill(skill)}
                   className="text-red-500 font-bold ml-2 hover:text-red-700">
