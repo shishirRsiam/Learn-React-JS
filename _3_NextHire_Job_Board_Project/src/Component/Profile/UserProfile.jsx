@@ -76,16 +76,10 @@ const UserProfile = (props) => {
                             transition={{ duration: 0.9, delay: 0.6 }}>
                             <h2 className="text-xl font-bold text-gray-800 mb-4">Skills and Interests</h2>
                             <div className="flex flex-wrap gap-3">
-                                {[
-                                    "React", 
-                                    "Django", 
-                                    "JavaScript", 
-                                    "Tailwind CSS", 
-                                    "Problem Solving"
-                                ].map((skill) => (
-                                    <span key={skill}
+                                {user.skill.map((skill) => (
+                                    <span key={skill.id}
                                         className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm shadow-sm hover:shadow-md transition-shadow">
-                                        {skill}
+                                        {skill.name}
                                     </span>
                                 ))}
                             </div>
