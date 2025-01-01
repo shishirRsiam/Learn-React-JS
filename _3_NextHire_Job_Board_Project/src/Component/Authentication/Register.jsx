@@ -93,7 +93,7 @@ const RegisterForm = () => {
   return (
     <div className="max-w-6xl border mx-auto bg-white shadow-lg rounded-3xl p-8 pb-5 my-10">
       <h2 className="text-3xl font-semibold text-indigo-600 text-center mb-6">
-        Create Your HireHub Account
+        Create Your NextHire Account
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">

@@ -14,7 +14,7 @@ const HomePage = () => {
             >
                 <div className="container mx-auto px-4 text-center mt-10">
                     <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                        Welcome to HireHub
+                        Welcome to NextHire
                     </h1>
                     <p className="text-lg md:text-xl mb-8">
                         Your ultimate platform to simplify hiring and job searching with cutting-edge tools.
@@ -92,7 +92,7 @@ const HomePage = () => {
                             transition={{ duration: 0.8, delay: 1 }}
                         >
                             <p className="italic">
-                                "HireHub made our hiring process 10x faster and more efficient!"
+                                "NextHire made our hiring process 10x faster and more efficient!"
                             </p>
                             <h4 className="font-bold mt-4">- John Doe, CEO</h4>
                         </motion.div>
@@ -146,7 +146,7 @@ const HomePage = () => {
                 <div className="container mx-auto px-4 text-center">
                     <h2 className="text-3xl font-bold mb-6">Ready to Get Started?</h2>
                     <p className="text-lg mb-8">
-                        Join thousands of businesses and professionals using HireHub today.
+                        Join thousands of businesses and professionals using NextHire today.
                     </p>
                     <Link to="register/" className="bg-yellow-400 text-gray-800 font-semibold py-3 px-6 rounded-lg hover:bg-yellow-500 transition">
                         Sign Up Now

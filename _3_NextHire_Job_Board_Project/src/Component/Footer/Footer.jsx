@@ -8,7 +8,7 @@ const FooterComponent = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Company Info */}
                     <div>
-                        <h3 className="text-xl font-semibold text-white mb-4">HireHub</h3>
+                        <h3 className="text-xl font-semibold text-white mb-4">NextHire</h3>
                         <p className="text-sm">
                             Empowering your hiring process with modern tools and seamless experiences.
                         </p>
@@ -60,7 +60,7 @@ const FooterComponent = () => {
 
                 {/* Footer Bottom */}
                 <div className="flex flex-col md:flex-row justify-between items-center text-sm">
-                    <p>&copy; 2024 HireHub. All Rights Reserved.</p>
+                    <p>&copy; 2024 NextHire. All Rights Reserved.</p>
                     <div className="space-x-4">
                         <a href="#facebook" className="hover:text-yellow-300">Facebook</a>
                         <a href="#twitter" className="hover:text-yellow-300">Twitter</a>

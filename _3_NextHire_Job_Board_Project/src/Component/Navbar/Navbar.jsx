@@ -56,7 +56,7 @@ const NavbarComponent = () => {
             animate={{ y: isVisible ? 0 : -100 }} // Animate to the visible state
             transition={{ type: 'spring', stiffness: 100, damping: 25 }} >
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                <a href="/" className="text-2xl font-bold text-white">HireHub</a>
+                <a href="/" className="text-2xl font-bold text-white">NextHire</a>
                 {/* Navigation Links */}
                 {/* <NavigationLinks user={user} /> */}
                 <ul className="hidden md:flex space-x-2">
