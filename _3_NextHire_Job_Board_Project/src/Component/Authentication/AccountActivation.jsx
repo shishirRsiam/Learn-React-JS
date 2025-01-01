@@ -12,9 +12,7 @@ function ActivationPage() {
 
     const activateAccount = async () => {
         try {
-        const api = `${API.ActivationAPI}${id}/${token}`;
-
-        const response = await fetch(api);
+        const response = await fetch(`http://localhost:8000/api/accounts/activate/${id}/${token}/`);
         const data = await response.json();
 
         if (response.ok) {
